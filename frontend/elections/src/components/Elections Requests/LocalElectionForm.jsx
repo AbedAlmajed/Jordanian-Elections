@@ -120,16 +120,6 @@ const LocalElectionForm = () => {
   };
 
   const handleAddMember = async () => {
-    // if (formData.members.length >= 3) {
-    //   Swal.fire({
-    //     icon: "warning",
-    //     title: "تحذير",
-    //     text: "يمكنك إضافة 3 أعضاء كحد أقصى",
-    //     confirmButtonText: "موافق",
-    //   });
-    //   return;
-    // }
-
     const { value: memberId } = await Swal.fire({
       title: "إضافة عضو",
       input: "text",
@@ -138,6 +128,14 @@ const LocalElectionForm = () => {
       confirmButtonText: "إضافة",
       cancelButtonText: "إلغاء",
       showCancelButton: true,
+      buttonsStyling: false, // Disable default styles
+      customClass: {
+        confirmButton:
+          "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline ml-1",
+        cancelButton:
+          "bg-red-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mr-1",
+        inputLabel: "text-xl font-bold", // Custom class for larger label text
+      },
       inputValidator: (value) => {
         if (!value) {
           return "يجب إدخال الرقم الوطني للعضو";
@@ -146,14 +144,44 @@ const LocalElectionForm = () => {
     });
 
     if (memberId) {
+      // Check if the member is already in the list
+      if (formData.members.some((member) => member.id === memberId)) {
+        Swal.fire({
+          icon: "error",
+          title: "خطأ",
+          text: "هذا العضو موجود بالفعل في القائمة",
+          confirmButtonText: "موافق",
+        });
+        return;
+      }
+
       try {
         const response = await axios.get(
           `http://localhost:5000/api/requests/nationalId/${memberId}`
         );
         const memberData = response.data;
+
+        if (memberData.circle !== formData.circle) {
+          Swal.fire({
+            icon: "error",
+            title: "خطأ",
+            text: "يجب أن يكون العضو من نفس الدائرة",
+            confirmButtonText: "موافق",
+            buttonsStyling: false, // Disable default styles
+            customClass: {
+              confirmButton:
+                "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline",
+            },
+          });
+          return;
+        }
+
         setFormData((prev) => ({
           ...prev,
-          members: [...prev.members, { id: memberId, name: memberData.name }],
+          members: [
+            ...prev.members,
+            { id: memberId, name: memberData.name, circle: memberData.circle },
+          ],
         }));
         Swal.fire({
           icon: "success",
@@ -170,6 +198,14 @@ const LocalElectionForm = () => {
         });
       }
     }
+  };
+
+  // Function to remove a member
+  const handleRemoveMember = (memberId) => {
+    setFormData((prev) => ({
+      ...prev,
+      members: prev.members.filter((member) => member.id !== memberId),
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -191,6 +227,10 @@ const LocalElectionForm = () => {
       showCancelButton: true,
       confirmButtonText: "نعم، تأكيد",
       cancelButtonText: "إلغاء",
+      customClass: {
+        confirmButton:
+          "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline",
+      },
     });
 
     if (result.isConfirmed) {
@@ -199,7 +239,11 @@ const LocalElectionForm = () => {
         const requestData = {
           national_id: formData.national_id,
           local_list_name: formData.local_list_name,
-          members: formData.members.map((member) => ({ name: member.name })),
+          circle: formData.circle,
+          members: formData.members.map((member) => ({
+            id: member.id,
+            name: member.name,
+          })),
         };
 
         await axios.post(
@@ -210,7 +254,7 @@ const LocalElectionForm = () => {
         Swal.fire({
           icon: "success",
           title: "تم تقديم الطلب",
-          text: "تم تقديم الطلب بنجاح. سنتواصل مع جميع الأشخاص المعنيين خلال 48 ساعة.",
+          text: "تم تقديم الطلب بنجاح. سيتم مراجعة الطلب خلال 48 ساعة وفي حال قبول الطلب ستم التواصل مع جميع الأشخاص المعنيين",
           confirmButtonText: "موافق",
         }).then(() => {
           navigate("/");
@@ -231,21 +275,21 @@ const LocalElectionForm = () => {
   return (
     <>
       <Header />
-      <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8 mb-12 mt-12">
-        <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-8">
+      <div className="max-w-2xl mx-auto bg-gradient-to-b from-gray-100 to-green-100 shadow-xl rounded-2xl p-8 mb-12 mt-12">
+        <h2 className="text-4xl font-extrabold text-center text-zait mb-8">
           نموذج الانتخابات المحلية
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label
               htmlFor="national_id"
-              className="block text-gray-700 text-lg font-semibold mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               الرقم الوطني
             </label>
             <input
               id="national_id"
-              className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.national_id}
               onChange={handleNationalIdChange}
               required
@@ -253,12 +297,12 @@ const LocalElectionForm = () => {
           </div>
 
           {loading && (
-            <div className="text-center text-blue-600">جاري التحميل...</div>
+            <div className="text-center text-green-600">جاري التحميل...</div>
           )}
 
           {error && (
             <div
-              className="bg-red-100 border border-red-300 text-red-600 px-4 py-3 rounded-lg relative"
+              className="bg-red-100 border border-red-300 text-red-600 px-4 py-3 rounded-xl relative"
               role="alert"
             >
               {error}
@@ -268,13 +312,13 @@ const LocalElectionForm = () => {
           <div>
             <label
               htmlFor="name"
-              className="block text-gray-700 text-lg font-semibold mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               الاسم
             </label>
             <input
               id="name"
-              className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.name}
               readOnly
             />
@@ -283,13 +327,13 @@ const LocalElectionForm = () => {
           <div>
             <label
               htmlFor="city"
-              className="block text-gray-700 text-lg font-semibold mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               المدينة
             </label>
             <input
               id="city"
-              className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.city}
               readOnly
             />
@@ -298,13 +342,13 @@ const LocalElectionForm = () => {
           <div>
             <label
               htmlFor="circle"
-              className="block text-gray-700 text-lg font-semibold mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               الدائرة
             </label>
             <input
               id="circle"
-              className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.circle}
               readOnly
             />
@@ -313,13 +357,13 @@ const LocalElectionForm = () => {
           <div>
             <label
               htmlFor="email"
-              className="block text-gray-700 text-lg font-semibold mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               البريد الإلكتروني
             </label>
             <input
               id="email"
-              className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.email}
               readOnly
             />
@@ -328,13 +372,13 @@ const LocalElectionForm = () => {
           <div>
             <label
               htmlFor="local_list_name"
-              className="block text-gray-700 text-lg font-semibold mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               اسم القائمة المحلية
             </label>
             <input
               id="local_list_name"
-              className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.local_list_name}
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -347,13 +391,13 @@ const LocalElectionForm = () => {
           </div>
 
           <div>
-            <label className="block text-gray-700 text-lg font-semibold mb-2">
+            <label className="block text-zait text-lg font-semibold mb-2">
               الأعضاء
             </label>
             {formData.members.map((member, index) => (
               <div key={index} className="flex items-center space-x-2 mb-2">
                 <input
-                  className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-blue-500"
+                  className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
                   value={member.id}
                   readOnly
                 />
@@ -364,7 +408,7 @@ const LocalElectionForm = () => {
               type="button"
               onClick={handleAddMember}
               disabled={formData.members.length >= 3}
-              className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mt-2"
+              className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline mt-2"
             >
               إضافة عضو
             </button>
@@ -372,15 +416,13 @@ const LocalElectionForm = () => {
 
           <button
             type="submit"
-            className="bg-green-600 hover:bg-green-800 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full"
+            className="bg-zait hover:bg-green-800 text-white font-bold py-3 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full"
             disabled={loading}
           >
             {loading ? "جاري التقديم..." : "تقديم الطلب"}
           </button>
         </form>
-        <div></div>
       </div>
-
       <Footer />
     </>
   );

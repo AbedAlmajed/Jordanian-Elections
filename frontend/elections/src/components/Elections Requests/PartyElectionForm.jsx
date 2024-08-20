@@ -81,6 +81,12 @@ const PartyElectionForm = () => {
       showCancelButton: true,
       confirmButtonText: "نعم، تأكيد",
       cancelButtonText: "إلغاء",
+      customClass: {
+        confirmButton:
+          "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline",
+        cancelButton:
+          "bg-red-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mr-1",
+      },
     });
 
     if (result.isConfirmed) {
@@ -92,9 +98,13 @@ const PartyElectionForm = () => {
         );
         Swal.fire({
           title: "نجاح!",
-          text: "تم تقديم الطلب بنجاح. سنتواصل مع الشخص المعني خلال 48 ساعة",
+          text: "تم تقديم الطلب بنجاح. سيتم مراجعة الطلب خلال 48 ساعة وفي حال قبول الطلب ستم التواصل مع جميع الأشخاص المعنيين",
           icon: "success",
           confirmButtonText: "موافق",
+          customClass: {
+            confirmButton:
+              "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline",
+          },
         }).then(() => {
           navigate("/");
         });
@@ -114,21 +124,21 @@ const PartyElectionForm = () => {
   return (
     <>
       <Header />
-      <div className="w-[35rem] mx-auto bg-white shadow-lg rounded-lg border border-gray-200 p-10 mb-12 mt-12">
-        <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
+      <div className="max-w-2xl mx-auto bg-gradient-to-b from-gray-100 to-green-100 shadow-xl rounded-2xl p-8 mb-12 mt-12">
+        <h2 className="text-4xl font-extrabold text-center text-zait mb-8">
           نموذج الانتخابات الحزبية
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label
               htmlFor="national_id"
-              className="block text-gray-700 text-base font-medium mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               الرقم الوطني
             </label>
             <input
               id="national_id"
-              className="shadow-sm border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.national_id}
               onChange={handleNationalIdChange}
               required
@@ -141,7 +151,7 @@ const PartyElectionForm = () => {
 
           {error && (
             <div
-              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative"
+              className="bg-red-100 border border-red-300 text-red-600 px-4 py-3 rounded-xl relative"
               role="alert"
             >
               {error}
@@ -151,13 +161,13 @@ const PartyElectionForm = () => {
           <div>
             <label
               htmlFor="name"
-              className="block text-gray-700 text-base font-medium mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               الاسم
             </label>
             <input
               id="name"
-              className="shadow-sm border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.name}
               readOnly
             />
@@ -166,13 +176,13 @@ const PartyElectionForm = () => {
           <div>
             <label
               htmlFor="city"
-              className="block text-gray-700 text-base font-medium mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               المدينة
             </label>
             <input
               id="city"
-              className="shadow-sm border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.city}
               readOnly
             />
@@ -181,13 +191,13 @@ const PartyElectionForm = () => {
           <div>
             <label
               htmlFor="circle"
-              className="block text-gray-700 text-base font-medium mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               الدائرة
             </label>
             <input
               id="circle"
-              className="shadow-sm border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.circle}
               readOnly
             />
@@ -196,13 +206,13 @@ const PartyElectionForm = () => {
           <div>
             <label
               htmlFor="email"
-              className="block text-gray-700 text-base font-medium mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               البريد الإلكتروني
             </label>
             <input
               id="email"
-              className="shadow-sm border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.email}
               readOnly
             />
@@ -211,13 +221,13 @@ const PartyElectionForm = () => {
           <div>
             <label
               htmlFor="party_list_name"
-              className="block text-gray-700 text-base font-medium mb-2"
+              className="block text-zait text-lg font-semibold mb-2"
             >
               اسم القائمة الحزبية
             </label>
             <select
               id="party_list_name"
-              className="shadow-sm border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               value={formData.party_list_name}
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -238,14 +248,13 @@ const PartyElectionForm = () => {
 
           <button
             type="submit"
-            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-300 w-full"
+            className="bg-zait hover:bg-green-800 text-white font-bold py-3 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full"
             disabled={loading || !formData.name}
           >
             {loading ? "جاري التقديم..." : "تقديم الطلب"}
           </button>
         </form>
       </div>
-
       <Footer />
     </>
   );

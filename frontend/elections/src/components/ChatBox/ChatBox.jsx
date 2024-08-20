@@ -137,9 +137,6 @@
 
 // export default ChatBox;
 
-
-
-
 ////////////////work
 
 // import React, { useState, useEffect, useRef } from "react";
@@ -281,10 +278,7 @@
 
 // export default ChatBox;
 
-
-
 /////////////////
-
 
 // import React, { useState, useEffect, useRef } from "react";
 // import axios from "axios";
@@ -303,12 +297,12 @@
 //     try {
 //       const token = localStorage.getItem('token');
 //       const response = await axios.post(
-//         "http://localhost:5000/api/chat/add-message", 
+//         "http://localhost:5000/api/chat/add-message",
 //         { UserMessage: inputMessage },
-//         { 
-//           headers: { 
-//             'Authorization': `Bearer ${token}` 
-//           } 
+//         {
+//           headers: {
+//             'Authorization': `Bearer ${token}`
+//           }
 //         }
 //       );
 //       setInputMessage("");
@@ -325,11 +319,11 @@
 //   const fetchMessages = async () => {
 //     try {
 //       const token = localStorage.getItem('token');
-//       const response = await axios.get("http://localhost:5000/api/chat/getmessages", 
-//         { 
-//           headers: { 
-//             'Authorization': `Bearer ${token}` 
-//           } 
+//       const response = await axios.get("http://localhost:5000/api/chat/getmessages",
+//         {
+//           headers: {
+//             'Authorization': `Bearer ${token}`
+//           }
 //         }
 //       );
 
@@ -466,19 +460,19 @@ const ChatBox = () => {
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
         alert("لم يتم العثور على توكن. يرجى تسجيل الدخول مرة أخرى.");
         return;
       }
 
       await axios.post(
-        "http://localhost:5000/api/chat/add-message", 
+        "http://localhost:5000/api/chat/add-message",
         { UserMessage: inputMessage },
-        { 
-          headers: { 
-            'Authorization': `Bearer ${token}` 
-          } 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       setInputMessage("");
@@ -493,18 +487,18 @@ const ChatBox = () => {
 
   const fetchMessages = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        console.error('No token found in localStorage');
+        console.error("No token found in localStorage");
         return;
       }
 
       const response = await axios.get(
-        "http://localhost:5000/api/chat/getmessages", 
-        { 
-          headers: { 
-            'Authorization': `Bearer ${token}` 
-          } 
+        "http://localhost:5000/api/chat/getmessages",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -512,6 +506,7 @@ const ChatBox = () => {
       setMessages(sortedMessages);
     } catch (error) {
       console.error("Error fetching messages:", error);
+
       if (error.response && error.response.status === 401) {
         alert("جلسة المستخدم منتهية. يرجى تسجيل الدخول مرة أخرى.");
       }
@@ -580,9 +575,7 @@ const ChatBox = () => {
             {messages.map((message) => (
               <div
                 key={message.M_Id}
-                className={`mb-2 ${
-                  message.admin ? "text-left" : "text-right"
-                }`}
+                className={`mb-2 ${message.admin ? "text-left" : "text-right"}`}
               >
                 <span
                   className={`inline-block p-2 rounded-lg ${

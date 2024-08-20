@@ -4,8 +4,9 @@ module.exports = {
     connection: {
       host: "localhost",
       user: "postgres",
+
       password: "Abed@0782744028",
-      database: "FinalElection",
+      database: "election6",
     },
   },
   production: {
@@ -13,8 +14,9 @@ module.exports = {
     connection: {
       host: "localhost",
       user: "postgres",
+
       password: "Abed@0782744028",
-      database: "FinalElection",
+      database: "election6",
     },
   },
   migrations: {
@@ -24,3 +26,6 @@ module.exports = {
     directory: "./seeds",
   },
 };
+
+
+//123456

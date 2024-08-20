@@ -116,9 +116,9 @@ exports.authenticateUser = async (req, res) => {
 
     // إرسال التوكن
 // <<<<<<< HEAD
-//     // res.status(200).json({ token });
-//     res.status(200).json({ token, national_id: nationalID });
-//     req.json({token})
+    // res.status(200).json({ token });
+    res.status(200).json({ token, national_id: nationalID });
+    req.json({token})
 
 
     res.status(200).json({ token, national_id: nationalID });
