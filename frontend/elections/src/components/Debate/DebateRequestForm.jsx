@@ -33,7 +33,7 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       await axios.post('http://localhost:5000/api/debates', formData); // Updated URL to match the backend server's port
+//       await axios.post('http://localhost:4003/api/debates', formData); // Updated URL to match the backend server's port
 //       navigate('/create-debate');
 //     } catch (error) {
 //       if (error.response && error.response.status === 400) {
@@ -43,7 +43,7 @@
 //       }
 //     }
 //   };
-  
+
 //   return (
 //     <div className="max-w-md mx-auto mt-10">
 //       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -134,9 +134,7 @@
 
 // export default DebateRequestForm;
 
-
 //////////////////////new//////////////////
-
 
 // import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
@@ -161,7 +159,7 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       await axios.post('http://localhost:5000/api/debates', formData); // Updated URL to match the backend server's port
+//       await axios.post('http://localhost:4003/api/debates', formData); // Updated URL to match the backend server's port
 
 //       // Show SweetAlert2 success message
 //       Swal.fire({
@@ -271,9 +269,7 @@
 
 // export default DebateRequestForm;
 
-
 /////////////////
-
 
 // import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
@@ -298,7 +294,7 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       await axios.post('http://localhost:5000/api/debates', formData);
+//       await axios.post('http://localhost:4003/api/debates', formData);
 
 //       // Show SweetAlert2 success message
 //       Swal.fire({
@@ -419,7 +415,6 @@
 
 ///////////////////////correct work ///////////////////////
 
-
 // import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
@@ -443,7 +438,7 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       await axios.post('http://localhost:5000/api/debates', formData);
+//       await axios.post('http://localhost:4003/api/debates', formData);
 
 //       // Show SweetAlert2 success message
 //       Swal.fire({
@@ -562,7 +557,6 @@
 
 // export default DebateRequestForm;
 
-
 ///////////////////////////////work correct final version ////////////////////
 
 // import React, { useState } from 'react';
@@ -600,7 +594,7 @@
 //     }
 
 //     try {
-//       await axios.post('http://localhost:5000/api/debates', formData);
+//       await axios.post('http://localhost:4003/api/debates', formData);
 
 //       // Show SweetAlert2 success message
 //       Swal.fire({
@@ -632,8 +626,7 @@
 //   return (
 //     <>
 //           <Header/>
-          
-          
+
 //     <div className="max-w-md mx-auto mt-10">
 //       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 //         <h2 className="text-2xl font-bold mb-6 text-center">طلب مناظرة</h2>
@@ -727,9 +720,7 @@
 
 // export default DebateRequestForm;
 
-
 /////////
-
 
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
@@ -792,7 +783,7 @@
 //     }
 
 //     try {
-//       await axios.post("http://localhost:5000/api/debates", formData);
+//       await axios.post("http://localhost:4003/api/debates", formData);
 
 //       // Show SweetAlert2 success message
 //       Swal.fire({
@@ -944,8 +935,6 @@
 
 // export default DebateRequestForm;
 
-
-
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import axios from "axios";
@@ -1006,7 +995,7 @@
 //     }
 
 //     try {
-//       await axios.post("http://localhost:5000/api/debates", formData);
+//       await axios.post("http://localhost:4003/api/debates", formData);
 
 //       Swal.fire({
 //         title: "تم إرسال الطلب بنجاح!",
@@ -1156,9 +1145,7 @@
 
 // export default DebateRequestForm;
 
-
 ////////////////////////////////////////////////////work with malek /////////////////
-
 
 // import React, { useState } from "react";
 // import axios from "axios";
@@ -1219,7 +1206,7 @@
 //     }
 
 //     try {
-//       await axios.post("http://localhost:5000/api/debates", formData);
+//       await axios.post("http://localhost:4003/api/debates", formData);
 
 //       Swal.fire({
 //         title: "تم إرسال الطلب بنجاح!",
@@ -1377,10 +1364,7 @@
 
 // export default DebateRequestForm;
 
-
-
 //////////////////////////////////work with payment /////////////
-
 
 // import React, { useState } from "react";
 // import axios from "axios";
@@ -1576,11 +1560,7 @@
 
 // export default DebateRequestForm;
 
-
-
 ////
-
-
 
 import React, { useState } from "react";
 import axios from "axios";
@@ -1615,13 +1595,16 @@ const DebateRequestForm = () => {
   const checkNationalIds = async () => {
     try {
       const { candidate1_id, candidate2_id } = formData;
-      const response = await axios.post("http://localhost:5000/check-candidates", {
-        candidate1_id,
-        candidate2_id,
-      });
+      const response = await axios.post(
+        "http://localhost:4003/check-candidates",
+        {
+          candidate1_id,
+          candidate2_id,
+        }
+      );
       return response.data.valid;
     } catch (error) {
-      console.error('Error checking national IDs:', error.message);
+      console.error("Error checking national IDs:", error.message);
       return false;
     }
   };
@@ -1639,6 +1622,10 @@ const DebateRequestForm = () => {
         text: "يرجى تعبئة جميع الحقول المطلوبة.",
         icon: "error",
         confirmButtonText: "موافق",
+        customClass: {
+          confirmButton:
+            "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline ml-1",
+        },
       });
       return;
     }
@@ -1650,6 +1637,10 @@ const DebateRequestForm = () => {
         text: dateError,
         icon: "error",
         confirmButtonText: "موافق",
+        customClass: {
+          confirmButton:
+            "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline ml-1",
+        },
       });
       return;
     }
@@ -1661,6 +1652,10 @@ const DebateRequestForm = () => {
         text: "الرقم الوطني للمرشح غير صحيح.",
         icon: "error",
         confirmButtonText: "موافق",
+        customClass: {
+          confirmButton:
+            "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline ml-1",
+        },
       });
       return;
     }
@@ -1677,6 +1672,10 @@ const DebateRequestForm = () => {
         text: "حدث خطأ أثناء إنشاء المناظرة. يرجى المحاولة مرة أخرى.",
         icon: "error",
         confirmButtonText: "موافق",
+        customClass: {
+          confirmButton:
+            "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline ml-1",
+        },
       });
     }
   };
@@ -1685,7 +1684,7 @@ const DebateRequestForm = () => {
     <>
       <Header />
       <div
-        className="w-full max-w-2xl mx-auto mt-10 p-10 rounded-xl shadow-lg"
+        className="max-w-2xl mx-auto bg-zait1 shadow-xl rounded-2xl p-8 mb-16 mt-20"
         style={{
           backgroundImage: "url('/picture.jpg')",
           backgroundColor: "rgba(255, 255, 255, 0.9)",
@@ -1694,16 +1693,19 @@ const DebateRequestForm = () => {
           backgroundSize: "cover",
         }}
       >
-        <h2 className="text-4xl font-bold mb-10 text-right text-[#274C77]">
+        <h2 className="text-4xl font-bold text-right text-zait mb-8">
           طلب مناظرة جديدة
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-8" dir="rtl">
-          <div className="flex flex-col">
-            <label className="mb-2 text-[#274C77] font-semibold" htmlFor="name">
+        <form onSubmit={handleSubmit} className="space-y-6" dir="rtl">
+          <div>
+            <label
+              className="block text-gray-600 text-lg font-semibold mb-2"
+              htmlFor="name"
+            >
               اسم المناظرة
             </label>
             <input
-              className="w-full border-2 border-[#274C77] rounded-lg p-4 bg-white text-right focus:outline-none focus:ring-2 focus:ring-[#274C77] focus:border-transparent transition-all duration-300"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-zait"
               id="name"
               type="text"
               name="name"
@@ -1715,13 +1717,13 @@ const DebateRequestForm = () => {
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-1">
               <label
-                className="mb-2 text-[#274C77] font-semibold"
+                className="block text-gray-600 text-lg font-semibold mb-2"
                 htmlFor="start_time"
               >
                 وقت البداية
               </label>
               <input
-                className="w-full border-2 border-[#274C77] rounded-lg p-4 bg-white text-right focus:outline-none focus:ring-2 focus:ring-[#274C77] focus:border-transparent transition-all duration-300"
+                className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-zait"
                 id="start_time"
                 type="datetime-local"
                 name="start_time"
@@ -1732,13 +1734,13 @@ const DebateRequestForm = () => {
             </div>
             <div className="flex-1">
               <label
-                className="mb-2 text-[#274C77] font-semibold"
+                className="block text-gray-600 text-lg font-semibold mb-2"
                 htmlFor="end_time"
               >
                 وقت النهاية
               </label>
               <input
-                className="w-full border-2 border-[#274C77] rounded-lg p-4 bg-white text-right focus:outline-none focus:ring-2 focus:ring-[#274C77] focus:border-transparent transition-all duration-300"
+                className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-zait"
                 id="end_time"
                 type="datetime-local"
                 name="end_time"
@@ -1751,13 +1753,13 @@ const DebateRequestForm = () => {
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-1">
               <label
-                className="mb-2 text-[#274C77] font-semibold"
+                className="block text-gray-600 text-lg font-semibold mb-2"
                 htmlFor="candidate1_id"
               >
                 الرقم الوطني للمرشح الأول
               </label>
               <input
-                className="w-full border-2 border-[#274C77] rounded-lg p-4 bg-white text-right focus:outline-none focus:ring-2 focus:ring-[#274C77] focus:border-transparent transition-all duration-300"
+                className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-zait"
                 id="candidate1_id"
                 type="text"
                 name="candidate1_id"
@@ -1768,13 +1770,13 @@ const DebateRequestForm = () => {
             </div>
             <div className="flex-1">
               <label
-                className="mb-2 text-[#274C77] font-semibold"
+                className="block text-gray-600 text-lg font-semibold mb-2"
                 htmlFor="candidate2_id"
               >
                 الرقم الوطني للمرشح الثاني
               </label>
               <input
-                className="w-full border-2 border-[#274C77] rounded-lg p-4 bg-white text-right focus:outline-none focus:ring-2 focus:ring-[#274C77] focus:border-transparent transition-all duration-300"
+                className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none  focus:border-zait"
                 id="candidate2_id"
                 type="text"
                 name="candidate2_id"
@@ -1787,7 +1789,7 @@ const DebateRequestForm = () => {
           <div className="flex justify-start mt-10">
             <button
               type="submit"
-              className="bg-[#274C77] text-white px-10 py-4 rounded-lg hover:bg-[#1E385A] transition duration-300 text-lg font-semibold"
+              className="bg-zait text-white font-bold py-3 px-4 rounded-xl focus:outline-none focus:shadow-outline hover:bg-gray-600 transition duration-300 text-lg"
             >
               إرسال الطلب
             </button>

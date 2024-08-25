@@ -115,7 +115,10 @@ import FAQSection from "./FAQSection";
 import PartnersSlider from "./PartnersSlider";
 import AdsSection from "./AdsSection";
 import ChatBox from "../ChatBox/ChatBox";
-
+import NewsUpdates1 from "./NewsUpdates";
+import ScrollingTickerparty from "../numberofvotes/CounterPartyVotes";
+import ScrollingTicker from "../numberofvotes/CounterVotesCircle";
+import VoterCounts from "./VoterCounts";
 const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
@@ -166,6 +169,7 @@ const HomePage = () => {
             variants={fadeIn}
             className="mb-12"
           >
+            <ScrollingTicker />
             <Countdown />
           </motion.section>
           <AdsSection />
@@ -175,12 +179,12 @@ const HomePage = () => {
             variants={fadeIn}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-8 mb-12"
           >
-            <div className="items-center flex justify-start">
+            {/* <div className="items-center flex justify-start">
               <ImportantDates importantDates={importantDates} />
               <NewsUpdates newsUpdates={newsUpdates} />
-            </div>
+            </div> */}
+            <VoterCounts />
           </motion.section>
-
           <motion.section
             initial="hidden"
             animate="visible"
@@ -195,21 +199,30 @@ const HomePage = () => {
             variants={fadeIn}
             className="mb-12"
           >
-            <FAQSection />
+            <NewsUpdates1 />
           </motion.section>
 
           <motion.section
             initial="hidden"
             animate="visible"
             variants={fadeIn}
-            className="mb-12 mx-24"
+            className="mb-12"
           >
-            <h2 className="text-2xl font-bold mb-4 flex items-center">
+            <FAQSection />
+          </motion.section>
+          {/* 
+          <motion.section
+            initial="hidden"
+            animate="visible"
+            variants={fadeIn}
+            className=" mx-24"
+          > */}
+          {/* <h2 className="text-2xl font-bold mb-4 flex items-center">
               <FaChartBar className="mr-4 " />
               إحصائيات الانتخابات
-            </h2>
-            <ElectionStats />
-          </motion.section>
+            </h2> */}
+          {/* <ElectionStats /> */}
+          {/* </motion.section> */}
         </main>
       </div>
       <Footer />
@@ -218,63 +231,65 @@ const HomePage = () => {
   );
 };
 
-const ImportantDates = ({ importantDates }) => (
-  <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 mr-12 mt-12">
-    <h2 className="text-2xl font-bold mb-4 flex items-center">
-      <FaCalendarAlt className="mr-2" />
-      تواريخ مهمة
-    </h2>
-    <ul className="space-y-2">
-      {importantDates.map((event, index) => (
-        <li key={index} className="flex items-center">
-          <span className="font-bold mr-2">{event.date}:</span>
-          <span>{event.event}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+// const ImportantDates = ({ importantDates }) => (
+//   <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 mr-12 mt-12">
+//     <h2 className="text-2xl font-bold mb-4 flex items-center">
+//       <FaCalendarAlt className="mr-2" />
+//       تواريخ مهمة
+//     </h2>
+//     <ul className="space-y-2">
+//       {importantDates.map((event, index) => (
+//         <li key={index} className="flex items-center">
+//           <span className="font-bold mr-2">{event.date}:</span>
+//           <span>{event.event}</span>
+//         </li>
+//       ))}
+//     </ul>
+//   </div>
+// );
 
-const NewsUpdates = ({ newsUpdates }) => (
-  <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 mr-12 mt-12">
-    <h2 className="text-2xl font-bold mb-4 flex items-center">
-      <FaNewspaper className="mr-2" />
-      آخر الأخبار
-    </h2>
-    <ul className="space-y-4">
-      {newsUpdates.map((news) => (
-        <li key={news.id} className="border-b pb-2">
-          <h3 className="font-bold">{news.title}</h3>
-          <p>{news.summary}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+// const NewsUpdates = ({ newsUpdates }) => (
+//   <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 mr-12 mt-12">
+//     <h2 className="text-2xl font-bold mb-4 flex items-center">
+//       <FaNewspaper className="mr-2" />
+//       آخر الأخبار
+//     </h2>
+//     <ul className="space-y-4">
+//       {newsUpdates.map((news) => (
+//         <li key={news.id} className="border-b pb-2">
+//           <h3 className="font-bold">{news.title}</h3>
+//           <p>{news.summary}</p>
+//         </li>
+//       ))}
+//     </ul>
+//   </div>
+// );
 
-const ElectionStats = () => {
-  const stats = [
-    { label: "عدد الناخبين المسجلين", value: "373" },
-    { label: "عدد الدوائر الانتخابية", value: "3" },
-    { label: "نسبة مشاركة ", value: "20%" },
-    { label: "عدد المرشحين", value: "66" },
-  ];
+// const ElectionStats = () => {
+//   const stats = [
+//     { label: "عدد الناخبين المسجلين", value: "373" },
+//     { label: "عدد الدوائر الانتخابية", value: "3" },
+//     { label: "نسبة مشاركة ", value: "20%" },
+//     { label: "عدد المرشحين", value: "66" },
+//   ];
 
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
-      {stats.map((stat, index) => (
-        <div
-          key={index}
-          className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 text-center"
-        >
-          <div className="text-3xl font-bold text-jordanian-red">
-            {stat.value}
-          </div>
-          <div className="text-sm">{stat.label}</div>
-        </div>
-      ))}
-    </div>
-  );
-};
+//   return (
+//     <>
+//       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
+//         {stats.map((stat, index) => (
+//           <div
+//             key={index}
+//             className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 text-center"
+//           >
+//             <div className="text-3xl font-bold text-jordanian-red">
+//               {stat.value}
+//             </div>
+//             <div className="text-sm">{stat.label}</div>
+//           </div>
+//         ))}
+//       </div>
+//     </>
+//   );
+// };
 
 export default HomePage;

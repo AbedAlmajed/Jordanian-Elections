@@ -3,7 +3,6 @@ const router = express.Router();
 const knex = require("../knex-config");
 const cors = require("cors");
 
-console.log("11");
 
 // Function to calculate the threshold and assign seats
 const calculateSeats = async (totalAllocatedSeats) => {
@@ -18,6 +17,7 @@ const calculateSeats = async (totalAllocatedSeats) => {
     (sum, item) => sum + item.voted_count,
     0
   );
+
 
   // Threshold is 2.5% of the total votes
   const threshold = 0.025 * totalPartyVotes;
@@ -70,4 +70,6 @@ router.get("/calculate-seats", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+console.log("11");
+
 module.exports = router;

@@ -8,7 +8,7 @@
 // // //     const timer = setInterval(() => {
 // // //       setTimeLeft(calculateTimeLeft());
 // // //     }, 1000);
-    
+
 // // //     return () => clearInterval(timer);
 // // //   }, [targetDate]);
 
@@ -51,11 +51,6 @@
 // // // };
 
 // // // export default CountdownTimer;
-
-
-
-
-
 
 // // // CountdownTimer.js
 // // import React, { useState, useEffect } from "react";
@@ -114,16 +109,6 @@
 // // };
 
 // // export default CountdownTimer;
-
-
-
-
-
-
-
-
-
-
 
 // // // // CountdownTimer.js
 // // // import React, { useState, useEffect } from "react";
@@ -186,10 +171,7 @@
 
 // // // export default CountdownTimer;
 
-
-
 // // Countdown.js
-
 
 // import React, { useState, useEffect } from 'react';
 // import { Clock } from 'lucide-react'; // Make sure you have this icon package installed
@@ -240,7 +222,6 @@
 
 // export default Countdown;
 
-
 // import React, { useState, useEffect } from 'react';
 // import { Clock } from 'lucide-react'; // Ensure this package is installed
 
@@ -253,9 +234,9 @@
 //     // Fetch upcoming election data
 //     const fetchUpcomingElection = async () => {
 //       try {
-//         const response = await fetch('http://localhost:5000/api/over/upcoming-election');
+//         const response = await fetch('http://localhost:4003/api/over/upcoming-election');
 //         const data = await response.json();
-        
+
 //         if (response.ok) {
 //           setStartDate(new Date(data.start_date));
 //           setEndDate(new Date(data.end_date));
@@ -314,9 +295,8 @@
 
 // export default Countdown;
 
-
-import React, { useState, useEffect } from 'react';
-import { Clock } from 'lucide-react'; // Ensure this package is installed
+import React, { useState, useEffect } from "react";
+import { Clock } from "lucide-react"; // Ensure this package is installed
 
 const Countdown = () => {
   const [countdown, setCountdown] = useState("");
@@ -327,9 +307,11 @@ const Countdown = () => {
     // Fetch upcoming election data
     const fetchUpcomingElection = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/over/upcoming-election');
+        const response = await fetch(
+          "http://localhost:4003/api/over/upcoming-election"
+        );
         const data = await response.json();
-        
+
         if (response.ok) {
           setStartDate(new Date(data.start_date));
           setEndDate(new Date(data.end_date));
@@ -337,7 +319,7 @@ const Countdown = () => {
           setCountdown("لا توجد انتخابات قادمة");
         }
       } catch (error) {
-        console.error('Error fetching upcoming election:', error);
+        console.error("Error fetching upcoming election:", error);
         setCountdown("حدث خطأ أثناء جلب البيانات");
       }
     };
@@ -365,7 +347,9 @@ const Countdown = () => {
       }
 
       const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const hours = Math.floor(
+        (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
       const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
@@ -374,16 +358,15 @@ const Countdown = () => {
         hours,
         minutes,
         seconds,
-        message
+        message,
       });
     }, 1000);
 
     return () => clearInterval(timer);
   }, [startDate, endDate]);
 
-  if (typeof countdown === 'string') {
+  if (typeof countdown === "string") {
     return (
-     
       <div className=" text-zait p-4 md:p-6 rounded-xl  text-center">
         <h2 className="text-xl mb-12 text-zait md:text-4xl font-bold md:mb-12 flex items-center justify-center">
           <Clock size={42} className="mr-2" />
@@ -395,11 +378,13 @@ const Countdown = () => {
   }
 
   return (
-    <div className=" p-2 md:p-2 rounded-xl  text-center my-16">
-     <div className="flex justify-center text-center">
-
-                <Clock size={42} className=" ml-2 text-4xl mb-4" /><h2 className="text-xl mb-4 text-zait md:text-4xl font-bold  md:mb-12  ">الوقت المتبقي</h2>
-     </div>
+    <div className=" p-2 md:p-2 rounded-xl  text-center my-16 mx-20">
+      <div className="flex justify-center text-center">
+        <Clock size={42} className=" ml-2 text-4xl mb-4" />
+        <h2 className="text-xl mb-4 text-zait md:text-4xl font-bold  md:mb-12  ">
+          الوقت المتبقي
+        </h2>
+      </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 ">
         <div className="bg-zait1  p-2 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 ">
           <h3 className="text-lg font-bold text-zait">أيام</h3>
@@ -424,7 +409,6 @@ const Countdown = () => {
 
 export default Countdown;
 
-
 // import React, { useState, useEffect } from 'react';
 // import { Clock } from 'lucide-react'; // Ensure this package is installed
 
@@ -437,9 +421,9 @@ export default Countdown;
 //     // Fetch upcoming election data
 //     const fetchUpcomingElection = async () => {
 //       try {
-//         const response = await fetch('http://localhost:5000/api/over/upcoming-election');
+//         const response = await fetch('http://localhost:4003/api/over/upcoming-election');
 //         const data = await response.json();
-        
+
 //         if (response.ok) {
 //           setStartDate(new Date(data.start_date));
 //           setEndDate(new Date(data.end_date));

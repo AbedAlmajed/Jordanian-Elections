@@ -128,6 +128,8 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 const ElectionResults = () => {
   const [results, setResults] = useState([]);
@@ -138,7 +140,7 @@ const ElectionResults = () => {
     const fetchResults = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/candidates/similar"
+          "http://localhost:4003/candidates/similar"
         );
         setResults(response.data);
         setLoading(false);
@@ -151,76 +153,93 @@ const ElectionResults = () => {
     fetchResults();
   }, []);
 
-  if (loading) return <div className="text-center mt-8">Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-blue-600" />
+      </div>
+    );
+
   if (error)
-    return <div className="text-center mt-8 text-red-600">{error}</div>;
+    return (
+      <div className="text-center mt-8 text-red-600">
+        {error}. Please try refreshing the page.
+      </div>
+    );
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Election Results</h1>
-      {results.map((cityResult, index) => (
-        <div
-          key={index}
-          className="mb-8 bg-white shadow-md rounded-lg overflow-hidden"
-        >
-          <h2 className="text-2xl font-semibold bg-gray-100 p-4">
-            {cityResult.city} - {cityResult.circle}
-          </h2>
-          <div className="p-4">
-            <p className="mb-2">
-              <strong>Total Seats:</strong> {cityResult.totalSeats}
-            </p>
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="bg-gray-200">
-                  <th className="p-2 text-left">List</th>
-                  <th className="p-2 text-left">Allocated Seats</th>
-                  <th className="p-2 text-left">List Weight</th>
-                  <th className="p-2 text-left">Whole Number Seat</th>
-                  <th className="p-2 text-left">Decimal Part Seat</th>
-                  <th className="p-2 text-left">List Votes</th>
-                  <th className="p-2 text-left">Threshold</th>
-                  <th className="p-2 text-left">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cityResult.passingCandidates.map(
-                  (candidate, candidateIndex) => (
-                    <tr
-                      key={candidateIndex}
-                      className={
-                        candidateIndex % 2 === 0 ? "bg-gray-50" : "bg-white"
-                      }
+    <>
+      <Header />
+      <div className="container mx-auto p-4 mb-20 mt-6">
+        <h1 className="text-4xl font-extrabold mb-8 text-center text-blue-700">
+          نتائج الانتخابات
+        </h1>
+        <table className="w-full border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200 border-b border-gray-400">
+              <th className="p-3 text-left text-gray-700">City</th>
+              <th className="p-3 text-left text-gray-700">Circle</th>
+              <th className="p-3 text-left text-gray-700">List</th>
+              <th className="p-3 text-left text-gray-700">Allocated Seats</th>
+              <th className="p-3 text-left text-gray-700">List Weight</th>
+              <th className="p-3 text-left text-gray-700">Whole Number Seat</th>
+              <th className="p-3 text-left text-gray-700">Decimal Part Seat</th>
+              <th className="p-3 text-left text-gray-700">List Votes</th>
+              <th className="p-3 text-left text-gray-700">Threshold</th>
+              <th className="p-3 text-left text-gray-700">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {results.flatMap((cityResult, cityIndex) =>
+              cityResult.passingCandidates.map((candidate, candidateIndex) => (
+                <tr
+                  key={`${cityIndex}-${candidateIndex}`}
+                  className={
+                    candidateIndex % 2 === 0
+                      ? "bg-gray-50 hover:bg-gray-100"
+                      : "bg-white hover:bg-gray-50"
+                  }
+                >
+                  <td className="p-3 text-gray-800">{cityResult.city}</td>
+                  <td className="p-3 text-gray-800">{cityResult.circle}</td>
+                  <td className="p-3 text-gray-800 font-medium">
+                    {candidate.list}
+                  </td>
+                  <td className="p-3 text-center">
+                    {candidate.allocatedSeats}
+                  </td>
+                  <td className="p-3 text-center">
+                    {candidate.listWeight.toFixed(2)}
+                  </td>
+                  <td className="p-3 text-center">
+                    {candidate.wholeNumberSeat}
+                  </td>
+                  <td className="p-3 text-center">
+                    {candidate.decimalPartSeat.toFixed(2)}
+                  </td>
+                  <td className="p-3 text-center">{candidate.list_votes}</td>
+                  <td className="p-3 text-center">
+                    {candidate.threshold.toFixed(2)}
+                  </td>
+                  <td className="p-3 text-center">
+                    <span
+                      className={`px-2 py-1 rounded ${
+                        candidate.status === "pass"
+                          ? "bg-green-200 text-green-800"
+                          : "bg-red-200 text-red-800"
+                      }`}
                     >
-                      <td className="p-2">{candidate.list}</td>
-                      <td className="p-2">{candidate.allocatedSeats}</td>
-                      <td className="p-2">{candidate.listWeight.toFixed(2)}</td>
-                      <td className="p-2">{candidate.wholeNumberSeat}</td>
-                      <td className="p-2">
-                        {candidate.decimalPartSeat.toFixed(2)}
-                      </td>
-                      <td className="p-2">{candidate.list_votes}</td>
-                      <td className="p-2">{candidate.threshold.toFixed(2)}</td>
-                      <td className="p-2">
-                        <span
-                          className={`px-2 py-1 rounded ${
-                            candidate.status === "pass"
-                              ? "bg-green-200 text-green-800"
-                              : "bg-red-200 text-red-800"
-                          }`}
-                        >
-                          {candidate.status}
-                        </span>
-                      </td>
-                    </tr>
-                  )
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ))}
-    </div>
+                      {candidate.status}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+      <Footer />
+    </>
   );
 };
 

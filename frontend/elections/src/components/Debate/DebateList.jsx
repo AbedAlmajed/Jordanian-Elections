@@ -8,7 +8,7 @@
 //   useEffect(() => {
 //     const fetchDebates = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:5000/api/debates');
+//         const response = await axios.get('http://localhost:4003/api/debates');
 //         setDebates(response.data);
 //       } catch (error) {
 //         console.error('Error fetching debates:', error);
@@ -21,7 +21,7 @@
 //   return (
 //     <>
 //     <Header/>
-    
+
 //     <div className="max-w-4xl mx-auto mt-10">
 //       <h2 className="text-2xl font-bold mb-6 text-center">قائمة المناظرات</h2>
 //       <table className="min-w-full bg-white border border-gray-200">
@@ -69,13 +69,7 @@
 
 // export default DebatesList;
 
-
-
-
-
 //////////////////////List///////////////
-
-
 
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
@@ -88,7 +82,7 @@
 //   useEffect(() => {
 //     const fetchDebates = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:5000/api/debates');
+//         const response = await axios.get('http://localhost:4003/api/debates');
 //         setDebates(response.data);
 //       } catch (error) {
 //         console.error('Error fetching debates:', error);
@@ -136,7 +130,7 @@
 //           </tbody>
 //         </table>
 //       </div>
-      
+
 //       <Footer />
 //     </>
 //   );
@@ -144,13 +138,7 @@
 
 // export default DebatesList;
 
-
-
-
-
 ///////////// card ////////////
-
-
 
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
@@ -163,7 +151,7 @@
 //   useEffect(() => {
 //     const fetchDebates = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:5000/api/debates');
+//         const response = await axios.get('http://localhost:4003/api/debates');
 //         setDebates(response.data);
 //       } catch (error) {
 //         console.error('Error fetching debates:', error);
@@ -200,7 +188,7 @@
 //           ))}
 //         </div>
 //       </div>
-      
+
 //       <Footer />
 //     </>
 //   );
@@ -208,11 +196,7 @@
 
 // export default DebatesList;
 
-
-
-
 //////////////////////////////////timeout////////
-
 
 // import React, { useEffect, useState } from "react";
 // import axios from "axios";
@@ -224,7 +208,7 @@
 //   useEffect(() => {
 //     const fetchDebates = async () => {
 //       try {
-//         const response = await axios.get("http://localhost:5000/api/debates");
+//         const response = await axios.get("http://localhost:4003/api/debates");
 //         setDebates(response.data);
 //       } catch (error) {
 //         console.error("Error fetching debates:", error);
@@ -338,7 +322,6 @@
 
 ///
 
-
 // import React, { useEffect, useState } from "react";
 // import axios from "axios";
 // import Header from "../Header/Header";
@@ -350,7 +333,7 @@
 //   useEffect(() => {
 //     const fetchDebates = async () => {
 //       try {
-//         const response = await axios.get("http://localhost:5000/api/debates");
+//         const response = await axios.get("http://localhost:4003/api/debates");
 //         setDebates(response.data);
 //       } catch (error) {
 //         console.error("Error fetching debates:", error);
@@ -429,7 +412,6 @@
 
 // export default DebatesList;
 
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../Header/Header";
@@ -441,7 +423,7 @@ const DebatesList = () => {
   useEffect(() => {
     const fetchDebates = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/debates");
+        const response = await axios.get("http://localhost:4003/api/debates");
         setDebates(response.data);
       } catch (error) {
         console.error("Error fetching debates:", error);
@@ -465,13 +447,13 @@ const DebatesList = () => {
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
+    return new Date(dateString).toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
     });
   };
 
@@ -488,39 +470,41 @@ const DebatesList = () => {
   return (
     <>
       <Header />
-      <div className="w-full md:w-2/3 mx-auto mt-10 p-6 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-right text-[#274C77]">
+      <div className="w-full md:w-2/3 mx-auto mt-10 p-6 rounded-lg shadow-lg bg-gray-100">
+        <h2 className="text-2xl font-bold mb-6 text-right text-zait">
           قائمة المناظرات
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {debates.map((debate) => (
             <div
               key={debate.id}
-              className="bg-white border border-gray-200 rounded-lg p-4 shadow hover:shadow-lg transition-shadow duration-300"
+              className="bg-white border border-gray-200 rounded-lg p-4 shadow hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between"
             >
-              <h3 className="text-lg font-semibold text-right text-[#274C77] mb-2">
-                {debate.name}
-              </h3>
-              <p className="text-right mb-1">
-                <strong>المرشح الأول:</strong> {debate.candidate1_name}
-              </p>
-              <p className="text-right mb-1">
-                <strong>المرشح الثاني:</strong> {debate.candidate2_name}
-              </p>
-              <p className="text-right mb-1">
-                <strong>وقت البداية:</strong> {formatDate(debate.start_time)}
-              </p>
-              <p className="text-right mb-4">
-                <strong>وقت النهاية:</strong> {formatDate(debate.end_time)}
-              </p>
+              <div>
+                <h3 className="text-lg font-semibold text-right text-zait mb-2">
+                  {debate.name}
+                </h3>
+                <p className="text-right mb-1">
+                  <strong>المرشح الأول:</strong> {debate.candidate1_name}
+                </p>
+                <p className="text-right mb-1">
+                  <strong>المرشح الثاني:</strong> {debate.candidate2_name}
+                </p>
+                <p className="text-right mb-1">
+                  <strong>وقت البداية:</strong> {formatDate(debate.start_time)}
+                </p>
+                <p className="text-right mb-4">
+                  <strong>وقت النهاية:</strong> {formatDate(debate.end_time)}
+                </p>
+              </div>
               <button
                 onClick={() => handleJoinClick(debate)}
                 className={`w-full py-2 px-4 rounded font-bold text-white transition duration-300 ${
                   isDebateActive(debate.start_time, debate.end_time)
-                    ? "bg-[#274C77] hover:bg-[#1E385A]"
+                    ? "bg-zait hover:bg-[#1E385A]"
                     : isDebateEnded(debate.end_time)
-                    ? "bg-[#5E385A] cursor-not-allowed"
-                    : "bg-[#6C757D] cursor-not-allowed"
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-gray-500 cursor-not-allowed"
                 }`}
                 disabled={!isDebateActive(debate.start_time, debate.end_time)}
               >

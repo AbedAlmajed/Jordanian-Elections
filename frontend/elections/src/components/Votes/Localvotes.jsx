@@ -234,6 +234,8 @@ function VotingApp() {
     <>
       <Header />
 
+     
+
       {/* hero  */}
 
       <div

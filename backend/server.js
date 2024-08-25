@@ -22,7 +22,7 @@
 // app.use('/api/party-lists', partyListsRoutes);
 // app.use('/api', electoralDistrictsRoute);
 
-// const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 4003;
 // app.listen(PORT, () => {
 //   console.log(`Server running on port ${PORT}`);
 // });
@@ -52,7 +52,7 @@
 // app.use('/api/electoral-districts', electoralDistrictsRoute); // Adjusted endpoint
 // app.use('/api/userAuth', userAuthRoutes);
 
-// const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 4003;
 // app.listen(PORT, () => {
 //   console.log(`Server running on port ${PORT}`);
 // });
@@ -140,7 +140,7 @@
 //   res.status(500).send("Something broke!");
 // });
 
-// const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 4003;
 // app.listen(PORT, () => {
 //   console.log(`Server running on port ${PORT}`);
 // });
@@ -189,6 +189,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
+
 console.log("11");
 app.use("/api", resultPartyrouter);
 console.log("21");
@@ -307,7 +308,7 @@ app.post("/check-candidates", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4003;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

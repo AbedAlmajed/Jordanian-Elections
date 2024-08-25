@@ -5,7 +5,7 @@ module.exports = {
       host: "localhost",
       user: "postgres",
 
-      password: "Abed@0782744028",
+      password: "123456",
       database: "election6",
     },
   },
@@ -15,7 +15,7 @@ module.exports = {
       host: "localhost",
       user: "postgres",
 
-      password: "Abed@0782744028",
+      password: "123456",
       database: "election6",
     },
   },
@@ -26,6 +26,3 @@ module.exports = {
     directory: "./seeds",
   },
 };
-
-
-//123456

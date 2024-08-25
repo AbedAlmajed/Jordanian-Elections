@@ -9,6 +9,7 @@ exports.up = function (knex) {
         .comment("This is the national_id column");
       table.foreign("national_id").references("national_id").inTable("users");
       table.string("local_list_name").notNullable();
+      table.boolean("isApproved").defaultTo(false); // Add isApproved column with default value false
       table.timestamps(true, true);
     })
     .then(function () {

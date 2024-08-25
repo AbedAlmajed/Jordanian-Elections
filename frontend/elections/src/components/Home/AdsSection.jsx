@@ -10,7 +10,7 @@
 //     const fetchAds = async () => {
 //       try {
 //         setLoading(true);
-//         const response = await fetch('http://localhost:5000/api/ads/ads');
+//         const response = await fetch('http://localhost:4003/api/ads/ads');
 //         if (!response.ok) {
 //           throw new Error('Failed to fetch ads');
 //         }
@@ -91,7 +91,7 @@ const AdsSection = () => {
     const fetchAds = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:5000/api/ads");
+        const response = await fetch("http://localhost:4003/api/ads");
         if (!response.ok) {
           throw new Error("Failed to fetch ads");
         }
@@ -137,17 +137,17 @@ const AdsSection = () => {
       </div>
       <div className="p-4">
         <p className="text-gray-600 text-sm mb-2">{ad.description}</p>
-        <button className="mt-2 bg-zait text-white text-sm font-semibold py-2 px-4 rounded-full transition-colors duration-300">
+        {/* <button className="mt-2 bg-zait text-white text-sm font-bold py-2 px-4 rounded-xl transition-colors duration-300">
           المزيد من التفاصيل
-        </button>
+        </button> */}
       </div>
     </motion.div>
   );
 
   return (
-    <section className="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <section className="bg-zait1 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-center text-3xl font-extrabold text-gray-900 mb-8">
+        <h2 className="text-center text-4xl font-bold text-zait mb-12">
           إعلانات المرشحين
         </h2>
 
@@ -173,12 +173,12 @@ const AdsSection = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleRequestAd}
-            className="bg-zait text-white font-bold py-3 px-6 rounded-full 
+            className="bg-zait text-white font-bold py-3 px-6 rounded-xl
                         transition-colors duration-300 
                        focus:outline-none focus:ring-2 focus:ring-zait focus:ring-opacity-50
                        flex items-center justify-center mx-auto"
           >
-            <FaPlusCircle className="mr-2" />
+            <FaPlusCircle className="mr-2 " />
             اطلب إعلان
           </motion.button>
         </div>

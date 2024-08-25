@@ -150,6 +150,10 @@ import RequestAdForm from "./components/Advertisement form/Advertisement";
 import ElectionResults from "./pages/Results/Results";
 import CandidatesList from "./pages/Results/ResultCandidate";
 import SeatCalculation from "./pages/Results/Resultparty";
+import ScrollingTickerparty from "./components/numberofvotes/CounterPartyVotes";
+import ScrollingTicker from "./components/numberofvotes/CounterVotesCircle";
+import AllResults from "./pages/Results/AllReasults";
+// عرض شريط الاخبار
 
 const App = () => {
   return (
@@ -220,28 +224,36 @@ const App = () => {
           element={<PrivateRoute element={<ListVotes />} />}
         />
         {/* <Route path="/create-debate" element={<PrivateRoute element={<CreateDebate />} />} /> */}
-        <Route
+        {/* <Route
           path="/debates"
           element={<PrivateRoute element={<DebatesList />} />}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/Debate-screen"
           element={<PrivateRoute element={<Debate_screen />} />}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/Debate-Room/:roomId"
           element={<PrivateRoute element={<Debate_Room />} />}
-        />
+        /> */}
         {/* <Route path="/ads" element={<PrivateRoute element={<RequestAdForm />} />} /> */}
         <Route path="/ads" element={<RequestAdForm />} />
         <Route path="/requests" element={<ElectionRequests />} />
         <Route path="/local-form" element={<LocalElectionForm />} />
         <Route path="/party-form" element={<PartyElectionForm />} />
         <Route path="/create-debate" element={<CreateDebate />} />
+        <Route path="/debates" element={<DebatesList />} />
+        <Route path="/Debate-screen" element={<Debate_screen />} />
+        <Route path="/Debate-Room/:roomId" element={<Debate_Room />} />
         <Route path="/results" element={<ElectionResults />} />
-        <Route path="/results" element={<CandidatesList />} />
         <Route path="/CandidatesList" element={<CandidatesList />} />
         <Route path="/SeatCalculation" element={<SeatCalculation />} />
+        <Route
+          path="/ScrollingTickerparty"
+          element={<ScrollingTickerparty />}
+        />
+        <Route path="/ScrollingTicker" element={<ScrollingTickerparty />} />
+        <Route path="/AllResults" element={<AllResults />} />
       </Routes>
     </Router>
   );

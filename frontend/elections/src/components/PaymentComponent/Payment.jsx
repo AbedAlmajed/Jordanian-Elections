@@ -90,7 +90,7 @@
 // //     setProcessing(true);
 
 // //     try {
-// //       const response = await fetch('http://localhost:5000/create-payment-intent', {
+// //       const response = await fetch('http://localhost:4003/create-payment-intent', {
 // //         method: 'POST',
 // //         headers: { 'Content-Type': 'application/json' },
 // //         body: JSON.stringify({ amount: 1000, currency: 'usd' }), // example amount
@@ -178,7 +178,7 @@
 //     setProcessing(true);
 
 //     try {
-//       const response = await fetch('http://localhost:5000/create-payment-intent', {
+//       const response = await fetch('http://localhost:4003/create-payment-intent', {
 //         method: 'POST',
 //         headers: { 'Content-Type': 'application/json' },
 //         body: JSON.stringify({ amount: parseInt(amount), currency: 'usd' }),
@@ -278,14 +278,14 @@
 // //   const [processing, setProcessing] = useState(false);
 // //   const [succeeded, setSucceeded] = useState(false);
 // //   const [email, setEmail] = useState('');
-// //   const [amount, setAmount] = useState(5000); // تحديد المبلغ هنا (مثلاً 5000 سنت أي 50 دولار)
+// //   const [amount, setAmount] = useState(4003); // تحديد المبلغ هنا (مثلاً 4003 سنت أي 50 دولار)
 
 // //   const handleSubmit = async (event) => {
 // //     event.preventDefault();
 // //     setProcessing(true);
 
 // //     try {
-// //       const response = await fetch('http://localhost:5000/create-payment-intent', {
+// //       const response = await fetch('http://localhost:4003/create-payment-intent', {
 // //         method: 'POST',
 // //         headers: { 'Content-Type': 'application/json' },
 // //         body: JSON.stringify({ amount: parseInt(amount), currency: 'usd' }),
@@ -318,7 +318,7 @@
 // //         setSucceeded(true);
 
 // //         // تخزين البيانات في قاعدة البيانات بعد نجاح الدفع
-// //         await axios.post('http://localhost:5000/api/ads', formData, {
+// //         await axios.post('http://localhost:4003/api/ads', formData, {
 // //           headers: {
 // //             'Content-Type': 'application/json',
 // //           }
@@ -404,7 +404,7 @@
 //     const amountInCents = 200;
 
 //     try {
-//       const response = await axios.post('http://localhost:5000/payments/create-payment-intent', { amount: amountInCents, currency: 'usd' });
+//       const response = await axios.post('http://localhost:4003/payments/create-payment-intent', { amount: amountInCents, currency: 'usd' });
 //       const { error: backendError, clientSecret } = response.data;
 
 //       if (backendError) {
@@ -529,52 +529,87 @@ const CheckoutForm = () => {
     const amountInCents = 200;
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/payments/create-payment-intent",
-        { amount: amountInCents, currency: "usd" }
-      );
-      const { error: backendError, clientSecret } = response.data;
+      // Display confirmation alert
+      const result = await Swal.fire({
+        title: "هل أنت متأكد؟",
+        text: "هل تريد إتمام عملية الدفع؟",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "نعم، أكمل الدفع",
+        cancelButtonText: "إلغاء",
+        customClass: {
+          confirmButton:
+            "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline ml-1",
+          cancelButton:
+            "bg-red-500 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline",
+        },
+      });
 
-      if (backendError) {
-        setError(backendError);
+      // If the user confirmed, proceed with the payment
+      if (result.isConfirmed) {
+        const response = await axios.post(
+          "http://localhost:4003/payments/create-payment-intent",
+          { amount: amountInCents, currency: "usd" }
+        );
+        const { error: backendError, clientSecret } = response.data;
+
+        if (backendError) {
+          setError(backendError);
+          setProcessing(false);
+          return;
+        }
+
+        const { error: stripeError, paymentIntent } =
+          await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+              card: elements.getElement(CardElement),
+              billing_details: { email },
+            },
+          });
+
+        if (stripeError) {
+          setError(stripeError.message);
+        } else if (paymentIntent.status === "succeeded") {
+          setSucceeded(true);
+
+          // Get the form data from local storage or context/state
+          const debateFormData = JSON.parse(
+            localStorage.getItem("debateFormData")
+          );
+
+          // Send the debate request data to the server
+          await axios.post("http://localhost:4003/api/debates", debateFormData);
+
+          Swal.fire({
+            title: "تم إرسال الطلب بنجاح!",
+            text: "ننتظر موافقة الأدمن على طلبك",
+            icon: "success",
+            confirmButtonText: "موافق",
+            customClass: {
+              confirmButton:
+                "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline ml-1",
+            },
+          });
+
+          // Clear local storage and navigate
+          localStorage.removeItem("debateFormData");
+          navigate("/create-debate");
+        }
+
         setProcessing(false);
-        return;
-      }
-
-      const { error: stripeError, paymentIntent } =
-        await stripe.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: elements.getElement(CardElement),
-            billing_details: { email },
+      } else {
+        setProcessing(false);
+        Swal.fire({
+          title: "تم إلغاء الدفع",
+          text: "لم يتم إتمام عملية الدفع",
+          icon: "info",
+          confirmButtonText: "موافق",
+          customClass: {
+            confirmButton:
+              "bg-zait text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline ml-1",
           },
         });
-
-      if (stripeError) {
-        setError(stripeError.message);
-      } else if (paymentIntent.status === "succeeded") {
-        setSucceeded(true);
-
-        // Get the form data from local storage or context/state
-        const debateFormData = JSON.parse(
-          localStorage.getItem("debateFormData")
-        );
-
-        // Send the debate request data to the server
-        await axios.post("http://localhost:5000/api/debates", debateFormData);
-
-        Swal.fire({
-          title: "تم إرسال الطلب بنجاح!",
-          text: "ننتظر موافقة الأدمن على طلبك",
-          icon: "success",
-          confirmButtonText: "موافق",
-        });
-
-        // Clear local storage and navigate
-        localStorage.removeItem("debateFormData");
-        navigate("/create-debate");
       }
-
-      setProcessing(false);
     } catch (error) {
       console.error("Error:", error.message);
       setError("حدث خطأ أثناء معالجة الدفع.");

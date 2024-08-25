@@ -29,7 +29,7 @@ const RequestAdForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/ads",
+        "http://localhost:4003/api/ads",
         formData,
         {
           headers: {
@@ -78,15 +78,15 @@ const RequestAdForm = () => {
   return (
     <>
       <Header />
-      <div className="relative top-20 mx-auto p-6 md:p-12 border w-full max-w-lg shadow-lg rounded-md bg-white mb-40">
-        <h3 className="text-2xl font-bold text-center mb-8 text-gray-800">
+      <div className="relative top-20 mx-auto p-8 md:p-12 bg-gradient-to-b from-gray-100 to-green-100 shadow-xl rounded-2xl w-[42rem] mb-40">
+        <h3 className="text-3xl font-extrabold text-center mb-8 text-zait">
           طلب إعلان
         </h3>
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6" dir="rtl">
           <div>
             <label
               htmlFor="candidateName"
-              className="block text-lg font-medium text-gray-700"
+              className="block text-lg font-semibold text-zait mb-2"
             >
               اسم المرشح
             </label>
@@ -96,14 +96,14 @@ const RequestAdForm = () => {
               name="candidateName"
               value={formData.candidateName}
               onChange={handleInputChange}
-              className="mt-3 block w-full p-4 text-lg rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               required
             />
           </div>
           <div>
             <label
               htmlFor="imageUrl"
-              className="block text-lg font-medium text-gray-700"
+              className="block text-lg font-semibold text-zait mb-2"
             >
               رابط صورة المرشح
             </label>
@@ -113,14 +113,14 @@ const RequestAdForm = () => {
               name="imageUrl"
               value={formData.imageUrl}
               onChange={handleInputChange}
-              className="mt-3 block w-full p-4 text-lg rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               required
             />
           </div>
           <div>
             <label
               htmlFor="description"
-              className="block text-lg font-medium text-gray-700"
+              className="block text-lg font-semibold text-zait mb-2"
             >
               وصف الإعلان
             </label>
@@ -130,26 +130,26 @@ const RequestAdForm = () => {
               value={formData.description}
               onChange={handleInputChange}
               rows="6"
-              className="mt-3 block w-full p-4 text-lg rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
+              className="shadow-md appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:border-green-500"
               placeholder="مثال: انتخبوا مرشحكم فلان"
               required
             ></textarea>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mt-8">
             <button
               type="submit"
               className="bg-zait text-white font-bold py-3 px-8 rounded-full 
                       transition-colors duration-300 
-                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                      focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
             >
               إرسال
             </button>
             <button
               type="button"
               onClick={handleCancel}
-              className="bg-gray-300 text-gray-700 font-bold py-3 px-8 rounded-full 
-                       hover:bg-gray-400 transition-colors duration-300 
-                       focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+              className="bg-red-600 text-white font-bold py-3 px-8 rounded-full 
+                      hover:bg-red-700 transition-colors duration-300 
+                      focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
             >
               إلغاء
             </button>
